@@ -3,9 +3,7 @@
  */
 package com.wung.java8.time;
 
-import java.time.Clock;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 
 /**
  * 测试时区的日期时间 API.
@@ -27,12 +25,18 @@ public class ZoneDateTimeTest {
 		ZoneId currentZoneId = ZoneId.systemDefault();
 		System.out.println("zoneId2=" + currentZoneId);
 		
+		// 本地时间转换成指定时区的时间
+		LocalDateTime localDateTime = LocalDateTime.of(2018, Month.JULY, 31, 10, 10, 10);
+		System.out.println(localDateTime);
+		ZonedDateTime zonedDateTime2 = ZonedDateTime.of(localDateTime, ZoneId.of("America/New_York"));
+		System.out.println("zoneId3=" + zonedDateTime2);
 		
 		// out
-		// date1=2018-07-31T00:12:41.539+08:00[Asia/Shanghai]
+		// date1=2018-07-31T16:05:52.226+08:00[Asia/Shanghai]
 		// date2=2018-07-31T00:09:25.647+08:00[Asia/Shanghai]
 		// zoneId=Asia/Shanghai
 		// zoneId2=Asia/Shanghai
+		// zoneId3=2018-07-31T16:05:52.260-04:00[America/New_York]
 		
 	}
 }

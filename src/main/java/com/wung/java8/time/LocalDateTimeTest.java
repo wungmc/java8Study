@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
+import java.time.temporal.ChronoUnit;
 
 /**
  * java.time 包下提供了关于日期、时间、日期／时间、时区、时刻、时钟（Clock）的操作.
@@ -32,6 +33,7 @@ public class LocalDateTimeTest {
 		
 		LocalDateTime localDateTime1 = localDateTime.plusDays(2);
 		System.out.println("date4=" + localDateTime1);
+		// 也可以使用这个方法：plus(2, ChronoUnit.DAYS);
 		
 		LocalDateTime localDateTime2 = localDateTime.withYear(2017).withDayOfMonth(6);
 		System.out.println("date5=" + localDateTime2);
