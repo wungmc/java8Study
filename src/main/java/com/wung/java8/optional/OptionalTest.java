@@ -182,7 +182,9 @@ public class OptionalTest {
 		}
 		
 		// Optional 改造
-		Optional.ofNullable(insurance).filter(n -> "pingan".equals(n)).ifPresent(a -> System.out.println("ok"));
+		Optional.ofNullable(insurance)
+				.filter(n -> "pingan".equals(n.getName()))
+				.ifPresent(a -> System.out.println(a.getName()));
 	}
 	
 	
