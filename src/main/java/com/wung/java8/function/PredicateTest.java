@@ -1,7 +1,7 @@
 /*
  * Copyright (C), 2011-2018.
  */
-package com.wung.java8.functioninterface;
+package com.wung.java8.function;
 
 import java.util.Arrays;
 import java.util.List;
