@@ -7,7 +7,7 @@ import java.util.Random;
 import java.util.function.Supplier;
 
 /**
- * 函数函数接口 Supplier
+ * 提供者函数接口 Supplier
  *
  * 函数式接口：以 {@code @FunctionInterface} 标记的，有且只有一个抽象方法的接口。
  * java 默认提供了一些通用的函数式接口，主要有四种，这里是其一。
@@ -24,6 +24,8 @@ public class SupplierTest {
 		System.out.println(random.get());
 		
 		Supplier<Object> objectSupplier = () -> new Object();
+		// 方法引用的写法
+		// Supplier<Object> objectSupplier = Object :: new;
 		System.out.println(objectSupplier.get());
 		
 		// 没有默认方法
