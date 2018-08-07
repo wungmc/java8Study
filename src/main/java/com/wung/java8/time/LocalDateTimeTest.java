@@ -11,6 +11,8 @@ import java.time.temporal.ChronoUnit;
 
 /**
  * java.time 包下提供了关于日期、时间、日期／时间、时区、时刻、时钟（Clock）的操作.
+ * 该包下很多类都是不可变的，确保了线程安全。
+ *
  * <p>
  * 本类是测试本地化日期时间 API 的.
  *
