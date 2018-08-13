@@ -350,5 +350,42 @@ public class CollectorsTest {
 		);
 	}
 	
+	/**
+	 * 测试自定义收集器 MyToListCollector
+	 */
+	@Test
+	public void myToListCollector() {
+		List<Integer> valueList = transactions.stream()
+				.map(Transaction::getValue)
+				.collect(new MyToListCollector<>());
+		
+		System.out.println(valueList);
+		
+		
+		// out
+		// [300, 1000, 400, 710, 700, 950]
+	}
+	
+	
+	/**
+	 * 也可以将收集器写到 collect 接口里，不用显示的先定义。
+	 * （不过，不推荐这种写法）
+	 */
+	@Test
+	public void myToListCollector2() {
+		List<Integer> valueList = transactions.stream()
+				.map(Transaction::getValue)
+				.collect(ArrayList::new,
+						List::add,
+						ArrayList::addAll
+						);
+		
+		System.out.println(valueList);
+		
+		
+		// out
+		// [300, 1000, 400, 710, 700, 950]
+	}
+	
 	
 }
