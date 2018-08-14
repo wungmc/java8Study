@@ -9,15 +9,12 @@ import java.util.stream.Collector;
 import java.util.stream.IntStream;
 
 /**
- * 自定义一个质数收集器，将给定的正整数n之前的所有数分区为质数和非质数。
- *
- * @author wung 2018/8/13.
+ * @author wung 2018/8/14.
  */
-public class MyPrimeNumbersCollector implements Collector<Integer, Map<Boolean, List<Integer>>, Map<Boolean, List<Integer>>> {
-	
+public class MyPrimeNumbersCollector3 implements Collector<Integer, Map<Boolean, List<Integer>>, Map<Boolean, List<Integer>>> {
 	@Override
 	public Supplier<Map<Boolean, List<Integer>>> supplier() {
-		return () -> new HashMap<Boolean, List<Integer>>(){{
+		return () -> new HashMap<Boolean, List<Integer>>() {{
 			put(true, new ArrayList<>());
 			put(false, new ArrayList<>());
 		}};
@@ -26,14 +23,12 @@ public class MyPrimeNumbersCollector implements Collector<Integer, Map<Boolean, 
 	@Override
 	public BiConsumer<Map<Boolean, List<Integer>>, Integer> accumulator() {
 		return (map, item) -> {
-			map.get(isPrime(map.get(true), item))
-					.add(item);
+			map.get(isPrime(map.get(true), item)).add(item);
 		};
 	}
 	
 	@Override
 	public BinaryOperator<Map<Boolean, List<Integer>>> combiner() {
-		// throw new UnsupportedOperationException("不支持并行操作！");
 		return (map1, map2) -> {
 			map1.get(true).addAll(map2.get(true));
 			map1.get(false).addAll(map2.get(false));
@@ -52,10 +47,9 @@ public class MyPrimeNumbersCollector implements Collector<Integer, Map<Boolean, 
 	}
 	
 	private static boolean isPrime(List<Integer> list, int item) {
-		int i = (int)Math.sqrt((double) item);
+		int i = (int) Math.sqrt((double)item);
 		return takeWhile(list, p -> p <= i).stream()
 				.noneMatch(p -> item % p == 0);
-		
 	}
 	
 	private static List<Integer> takeWhile(List<Integer> list, Predicate<Integer> p) {
@@ -69,12 +63,12 @@ public class MyPrimeNumbersCollector implements Collector<Integer, Map<Boolean, 
 		return list;
 	}
 	
+	
 	public static void main(String[] args) {
 		int n = 20;
 		Map<Boolean, List<Integer>> map = IntStream.rangeClosed(2, n).boxed()
-				.collect(new MyPrimeNumbersCollector());
+				.collect(new MyPrimeNumbersCollector3());
 		
 		System.out.println(map);
 	}
-	
 }

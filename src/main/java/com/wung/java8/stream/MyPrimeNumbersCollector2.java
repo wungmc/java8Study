@@ -9,15 +9,14 @@ import java.util.stream.Collector;
 import java.util.stream.IntStream;
 
 /**
- * 自定义一个质数收集器，将给定的正整数n之前的所有数分区为质数和非质数。
+ * 再写一边
  *
  * @author wung 2018/8/13.
  */
-public class MyPrimeNumbersCollector implements Collector<Integer, Map<Boolean, List<Integer>>, Map<Boolean, List<Integer>>> {
-	
+public class MyPrimeNumbersCollector2 implements Collector<Integer, Map<Boolean, List<Integer>>, Map<Boolean, List<Integer>>> {
 	@Override
 	public Supplier<Map<Boolean, List<Integer>>> supplier() {
-		return () -> new HashMap<Boolean, List<Integer>>(){{
+		return () -> new HashMap<Boolean, List<Integer>>() {{
 			put(true, new ArrayList<>());
 			put(false, new ArrayList<>());
 		}};
@@ -25,20 +24,19 @@ public class MyPrimeNumbersCollector implements Collector<Integer, Map<Boolean, 
 	
 	@Override
 	public BiConsumer<Map<Boolean, List<Integer>>, Integer> accumulator() {
-		return (map, item) -> {
-			map.get(isPrime(map.get(true), item))
-					.add(item);
-		};
+		return (map, item) ->
+				map.get(isPrime(map.get(true), item)).add(item);
 	}
 	
 	@Override
 	public BinaryOperator<Map<Boolean, List<Integer>>> combiner() {
-		// throw new UnsupportedOperationException("不支持并行操作！");
-		return (map1, map2) -> {
-			map1.get(true).addAll(map2.get(true));
-			map1.get(false).addAll(map2.get(false));
-			return map1;
-		};
+		// return (map1, map2) -> {
+		// 	map1.get(true).addAll(map2.get(true));
+		// 	map1.get(false).addAll(map2.get(false));
+		// 	return map1;
+		// };
+		// throw  new UnsupportedOperationException("不支持");
+		return null;
 	}
 	
 	@Override
@@ -52,7 +50,7 @@ public class MyPrimeNumbersCollector implements Collector<Integer, Map<Boolean, 
 	}
 	
 	private static boolean isPrime(List<Integer> list, int item) {
-		int i = (int)Math.sqrt((double) item);
+		int i = (int) Math.sqrt((double) item);
 		return takeWhile(list, p -> p <= i).stream()
 				.noneMatch(p -> item % p == 0);
 		
@@ -70,11 +68,16 @@ public class MyPrimeNumbersCollector implements Collector<Integer, Map<Boolean, 
 	}
 	
 	public static void main(String[] args) {
+		// boxed 后加上 parallel() ，则会并行。
+		// 即使不是并行，combiner 方法也会被调用，所以这个方法用空实现比抛异常要好
 		int n = 20;
 		Map<Boolean, List<Integer>> map = IntStream.rangeClosed(2, n).boxed()
-				.collect(new MyPrimeNumbersCollector());
+				.collect(new MyPrimeNumbersCollector2());
 		
 		System.out.println(map);
+		
+		// out
+		// {false=[4, 6, 8, 9, 10, 12, 14, 15, 16, 18, 20], true=[2, 3, 5, 7, 11, 13, 17, 19]}
+		
 	}
-	
 }
