@@ -387,5 +387,15 @@ public class CollectorsTest {
 		// [300, 1000, 400, 710, 700, 950]
 	}
 	
-	
+	/**
+	 * 分区（特殊的分组）.
+	 * 将交易分为高额（ >= 500）交易和低额交易
+	 */
+	@Test
+	public void partitioningBy() {
+		Map<Boolean, List<Transaction>> map = transactions.stream()
+				.collect(Collectors.partitioningBy(t -> t.getValue() >= 500));
+		
+		System.out.println(map);
+	}
 }
