@@ -111,5 +111,37 @@ public class PerformanceTest {
 		// longStreamParalleSumTest耗时：3
 	}
 	
+	@Test
+	public void forkJoinSumTest() {
+		System.out.println("forkJoinSumTest耗时：" + testFramework(ForkJoinSum::forkJoinSum, 1000_0000));
+		
+		
+		// out
+		// forkJoinSumTest耗时：93
+	}
 	
+	@Test
+	public void forkJoinSumTest2() {
+		long[] nums = LongStream.rangeClosed(1, 1000_0000).toArray();
+		long fastest = Long.MAX_VALUE;
+		for (int i = 0; i < 10; i++) {
+			long start = System.nanoTime();
+			
+			long sum = ForkJoinSum.forkJoinSum2(nums);
+			
+			long duration = (System.nanoTime() - start) / 1000000;
+			if (duration < fastest) {
+				fastest = duration;
+			}
+			System.out.println("和：" + sum);
+		}
+		System.out.println("forkJoinSumTest2耗时：" + fastest);
+		
+		// out
+		// forkJoinSumTest2耗时：4
+		
+		// 注意与上例的区别，上面的例子中，大部分时间都是花在了准备数组上。
+		// 本例中，把数组准备的时间去掉后，效率就看出来了。
+		
+	}
 }
