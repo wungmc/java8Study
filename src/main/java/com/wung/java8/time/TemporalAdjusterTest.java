@@ -24,7 +24,8 @@ public class TemporalAdjusterTest {
 		System.out.println(localDate1);
 		System.out.println(localDate2);
 		
-		
-		
+		// out
+		// 2018-08-01
+		// 2018-08-17
 	}
 }

@@ -29,8 +29,19 @@ public class SupplierTest {
 		// Supplier<Object> objectSupplier = Object :: new;
 		System.out.println(objectSupplier.get());
 		
+		int n = getInt(() -> new Random().nextInt());
+		System.out.println(n);
+		
 		// 没有默认方法
+		
+		// out
+		// 2103572490
+		// java.lang.Object@6979e8cb
+		// 1727481262
 	}
 	
+	public static int getInt(Supplier<Integer> s) {
+		return s.get();
+	}
 	
 }
